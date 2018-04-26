@@ -20,22 +20,18 @@
 
     </item>
 
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/fitSystemBar"
+                android:title="适应状态栏高度"/>
+        <item
+                android:id="@+id/notFitSystemBar"
+                android:title="不再适应状态栏高度"/>
+    </group>
 
-    <item android:title="模式">
 
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                        android:id="@+id/mode_kitkat"
-                        android:title="kitkat"/>
-
-                <item
-                        android:id="@+id/mode_lollipop"
-                        android:title="lollipop"/>
-
-            </group>
-        </menu>
-
-    </item>
+    <item
+            android:id="@+id/translucent"
+            android:title="半透明"/>
 
 </menu>

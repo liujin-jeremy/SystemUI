@@ -151,7 +151,7 @@ public class SystemUI {
 
 
     /**
-     * 竖直方向偏移状态栏距离
+     * 竖直正方向偏移状态栏距离,不要多次调用给同一个view
      *
      * @param view            需要偏移的view
      * @param statusBarHeight 状态栏高度
@@ -168,6 +168,35 @@ public class SystemUI {
                 view.setPadding(
                         view.getPaddingLeft(),
                         view.getPaddingTop() + statusBarHeight,
+                        view.getPaddingRight(),
+                        view.getPaddingBottom()
+                );
+            }
+            view.requestLayout();
+        }
+    }
+
+
+    /**
+     * 竖直负方向偏移状态栏距离,需要自己保证view之前偏移过状态栏高度,不要多次调用给同一个view
+     *
+     * @param context context
+     * @param view    需要偏移的view
+     */
+    public static void doNotFitStatusBarHeight(Context context, View view) {
+
+        int statusBarHeight = getStatusBarHeight(context);
+
+        if (view != null) {
+            ViewGroup.LayoutParams rootLayoutParams = view.getLayoutParams();
+            if (rootLayoutParams instanceof ViewGroup.MarginLayoutParams) {
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
+                        rootLayoutParams;
+                layoutParams.topMargin -= statusBarHeight;
+            } else {
+                view.setPadding(
+                        view.getPaddingLeft(),
+                        view.getPaddingTop() - statusBarHeight,
                         view.getPaddingRight(),
                         view.getPaddingBottom()
                 );
@@ -196,7 +225,7 @@ public class SystemUI {
      *
      * @param activity activity
      */
-    public static void hideStatus(Activity activity) {
+    private static void hideStatus(Activity activity) {
 
         activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
@@ -207,7 +236,7 @@ public class SystemUI {
      *
      * @param activity activity
      */
-    public static void hideStatusStable(Activity activity) {
+    private static void hideStatusStable(Activity activity) {
 
         activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_FULLSCREEN |
