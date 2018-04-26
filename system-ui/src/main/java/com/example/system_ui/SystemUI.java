@@ -156,7 +156,7 @@ public class SystemUI {
      * @param view            需要偏移的view
      * @param statusBarHeight 状态栏高度
      */
-    public static void fitStatusBarHeight(int statusBarHeight, View view) {
+    private static void fitStatusBarHeight(int statusBarHeight, View view) {
 
         if (view != null) {
             ViewGroup.LayoutParams rootLayoutParams = view.getLayoutParams();
@@ -211,6 +211,7 @@ public class SystemUI {
      *
      * @param activity activity
      */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void translucentStatus(Activity activity) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -255,7 +256,9 @@ public class SystemUI {
     public static void layoutFullScreen(Activity activity) {
 
         activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         );
     }
 
@@ -324,7 +327,7 @@ public class SystemUI {
      *
      * @param activity activity
      */
-    public static void hideSystemUI(Activity activity) {
+    private static void hideSystemUI(Activity activity) {
 
         activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
@@ -337,7 +340,7 @@ public class SystemUI {
      *
      * @param activity activity
      */
-    public static void hideSystemUiStable(Activity activity) {
+    private static void hideSystemUiStable(Activity activity) {
 
         activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
