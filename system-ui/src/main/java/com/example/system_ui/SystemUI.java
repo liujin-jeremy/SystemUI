@@ -225,6 +225,7 @@ public class SystemUI {
      *
      * @param activity activity
      */
+    @Deprecated
     private static void hideStatus(Activity activity) {
 
         activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
@@ -236,6 +237,7 @@ public class SystemUI {
      *
      * @param activity activity
      */
+    @Deprecated
     private static void hideStatusStable(Activity activity) {
 
         activity.getWindow().getDecorView().setSystemUiVisibility(

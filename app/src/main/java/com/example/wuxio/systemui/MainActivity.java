@@ -94,6 +94,14 @@ public class MainActivity extends AppCompatActivity {
                                 SystemUI.translucentStatus(MainActivity.this);
                                 break;
 
+                            case R.id.immersive:
+                                SystemUI.immersiveSticky(MainActivity.this);
+                                break;
+
+                            case R.id.normal:
+                                SystemUI.normal(MainActivity.this);
+                                break;
+
                             default:
                                 break;
                         }
