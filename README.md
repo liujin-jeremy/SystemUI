@@ -1,4 +1,24 @@
 
+## 引入
+
+project
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+app
+
+```
+dependencies {
+        compile 'com.github.threekilogram:SystemUI:1.0'
+}
+```
+
 ## 设置状态栏颜色
 
 ```
