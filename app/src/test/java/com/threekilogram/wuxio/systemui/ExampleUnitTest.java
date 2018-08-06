@@ -1,4 +1,4 @@
-package com.example.system_ui;
+package com.threekilogram.wuxio.systemui;
 
 import org.junit.Test;
 

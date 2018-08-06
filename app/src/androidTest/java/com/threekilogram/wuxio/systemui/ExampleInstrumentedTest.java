@@ -1,4 +1,4 @@
-package com.example.system_ui;
+package com.threekilogram.wuxio.systemui;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.system_ui.test", appContext.getPackageName());
+        assertEquals("com.example.wuxio.systemui", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.system_ui;
+package com.threekilogram.systemui;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -14,9 +14,11 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
+ * 状态栏颜色设置工具
+ *
  * @author wuxio 2018-04-22:17:51
  */
-public class SystemUI {
+public class SystemUi {
 
     /**
      * 设置状态栏颜色

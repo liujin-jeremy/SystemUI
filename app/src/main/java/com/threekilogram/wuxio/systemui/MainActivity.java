@@ -1,4 +1,4 @@
-package com.example.wuxio.systemui;
+package com.threekilogram.wuxio.systemui;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.system_ui.SystemUI;
+import com.threekilogram.systemui.SystemUi;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Glide.with(this).load(R.drawable.i28731106).centerCrop().into(mIvLogo);
         Glide.with(this).load(R.drawable.i30033106).centerCrop().into(mIvNavigation);
 
-        SystemUI.layoutFullScreen(this);
+        SystemUi.layoutFullScreen(this);
 
         final Menu menu = mNavigationView.getMenu();
         mNavigationView.setNavigationItemSelectedListener(
@@ -59,18 +59,18 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
 
                             case R.id.color_gold:
-                                SystemUI.setStatusColor(MainActivity.this, getColor("#ffd700"));
+                                SystemUi.setStatusColor(MainActivity.this, getColor("#ffd700"));
                                 break;
 
                             case R.id.color_blue:
-                                SystemUI.setStatusColor(
+                                SystemUi.setStatusColor(
                                         MainActivity.this,
                                         getResources().getColor(R.color.colorPrimaryDark)
                                 );
                                 break;
 
                             case R.id.color_transparent:
-                                SystemUI.setStatusColor(
+                                SystemUi.setStatusColor(
                                         MainActivity.this,
                                         Color.TRANSPARENT
                                 );
@@ -78,28 +78,28 @@ public class MainActivity extends AppCompatActivity {
 
                             case R.id.fitSystemBar:
                                 if (!flag) {
-                                    SystemUI.fitStatusBarHeight(MainActivity.this, mIvLogo);
+                                    SystemUi.fitStatusBarHeight(MainActivity.this, mIvLogo);
                                     flag = true;
                                 }
                                 break;
 
                             case R.id.notFitSystemBar:
                                 if (flag) {
-                                    SystemUI.doNotFitStatusBarHeight(MainActivity.this, mIvLogo);
+                                    SystemUi.doNotFitStatusBarHeight(MainActivity.this, mIvLogo);
                                     flag = false;
                                 }
                                 break;
 
                             case R.id.translucent:
-                                SystemUI.translucentStatus(MainActivity.this);
+                                SystemUi.translucentStatus(MainActivity.this);
                                 break;
 
                             case R.id.immersive:
-                                SystemUI.immersiveSticky(MainActivity.this);
+                                SystemUi.immersiveSticky(MainActivity.this);
                                 break;
 
                             case R.id.normal:
-                                SystemUI.normal(MainActivity.this);
+                                SystemUi.normal(MainActivity.this);
                                 break;
 
                             default:
