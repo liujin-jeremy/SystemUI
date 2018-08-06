@@ -15,7 +15,7 @@ app
 
 ```
 dependencies {
-        compile 'com.github.threekilogram:SystemUI:1.1'
+        implementation 'com.github.threekilogram:SystemUI:1.2.1'
 }
 ```
 
