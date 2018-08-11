@@ -1,17 +1,16 @@
 package com.threekilogram.systemui;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorInt;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 /**
  * 状态栏颜色设置工具
@@ -20,343 +19,288 @@ import android.widget.FrameLayout;
  */
 public class SystemUi {
 
-    /**
-     * 设置状态栏颜色
-     *
-     * @param activity 需要设置状态栏颜色的activity
-     * @param color    状态栏颜色
-     */
-    public static void setStatusColor(Activity activity, @ColorInt int color) {
+      private static final String TAG = SystemUi.class.getSimpleName();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setLollipopStatusColor(activity, color);
-            return;
-        }
+      /**
+       * 设置状态栏半透明,并且activity布局延伸到状态栏下面
+       *
+       * @param activity activity
+       */
+      public static void translucentStatus ( Activity activity ) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setKitkatStatusColor(activity, color);
-        }
-    }
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
 
+                  activity.getWindow()
+                          .addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+            }
+      }
 
-    /**
-     * 设置状态栏颜色,并且设置根布局{@link View#setFitsSystemWindows(boolean)}为true
-     *
-     * @param activity    需要设置状态栏颜色的activity
-     * @param color       状态栏颜色
-     * @param offsetViews 需要竖直偏移的view,因为设置颜色之后,activity的布局会顶到状态栏里面,
-     *                    使用该方法可以将指定的view竖直偏移状态栏的高度
-     */
-    public static void setStatusColor(Activity activity, @ColorInt int color, View... offsetViews) {
+      /**
+       * 设置状态栏半透明,并且activity布局延伸到状态栏下面
+       *
+       * @param activity activity
+       */
+      public static void clearTranslucentStatus ( Activity activity ) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
 
-            setLollipopStatusColor(activity, color);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                  activity.getWindow()
+                          .clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+            }
+      }
 
-            setKitkatStatusColor(activity, color);
-        }
+      /**
+       * 状态栏透明
+       *
+       * @param activity activity
+       */
+      public static void transparentStatus ( Activity activity ) {
 
-        fitStatusBarHeight(activity, offsetViews);
-    }
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP ) {
 
+                  activity.getWindow()
+                          .addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+            }
+      }
 
-    /**
-     * 使用{@link Window#addFlags(int)}{@link WindowManager.LayoutParams#FLAG_TRANSLUCENT_STATUS},
-     * 配合添加一个设置为指定颜色的view到状态栏区域来间接设置状态栏颜色
-     *
-     * @param activity 需要设置状态栏颜色的activity
-     * @param color    状态栏颜色
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void setKitkatStatusColor(Activity activity, @ColorInt int color) {
+      /**
+       * 取消状态栏透明
+       *
+       * @param activity activity
+       */
+      public static void clearTransparentStatus ( Activity activity ) {
 
-        Window window = activity.getWindow();
-        //延伸到状态栏
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP ) {
 
-        //添加一个view
-        ViewGroup decorViewGroup = (ViewGroup) window.getDecorView();
-        View statusBarView = new View(window.getContext());
-        int statusBarHeight = getStatusBarHeight(window.getContext());
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams
-                .MATCH_PARENT, statusBarHeight);
-        params.gravity = Gravity.TOP;
-        statusBarView.setLayoutParams(params);
-        statusBarView.setBackgroundColor(color);
-        decorViewGroup.addView(statusBarView);
-    }
+                  activity.getWindow()
+                          .clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+            }
+      }
 
+      /**
+       * 设置状态栏颜色
+       *
+       * @param activity 需要设置状态栏颜色的activity
+       * @param color 状态栏颜色
+       */
+      public static void setStatusColor ( Activity activity, @ColorInt int color ) {
 
-    /**
-     * 使用{@link Window#setStatusBarColor(int)}API设置状态栏颜色
-     *
-     * @param activity 需要设置状态栏颜色的activity
-     * @param color    状态栏颜色
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setLollipopStatusColor(Activity activity, @ColorInt int color) {
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                  setLollipopStatusColor( activity, color );
+                  return;
+            }
 
-        Window window = activity.getWindow();
-        //设置状态栏颜色必须清除WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS标记
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //设置状态栏颜色必须设置WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS标记
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //绘制透明状态栏
-        window.setStatusBarColor(color);
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+                  setKitkatStatusColor( activity, color );
+            }
+      }
 
-        //activity背景延伸到状态栏,状态栏不隐藏,布局稳定
-        activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-    }
+      /**
+       * 使用{@link Window#setStatusBarColor(int)}API设置状态栏颜色
+       *
+       * @param activity 需要设置状态栏颜色的activity
+       * @param color 状态栏颜色
+       */
+      public static void setLollipopStatusColor ( Activity activity, @ColorInt int color ) {
 
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                  Window window = activity.getWindow();
+                  //设置状态栏颜色必须清除WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS标记
+                  window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+                  //设置状态栏颜色必须设置WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS标记
+                  window.addFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
+                  //绘制透明状态栏
+                  window.setStatusBarColor( color );
+            }
+      }
 
-    /**
-     * 获取状态栏高度
-     *
-     * @param context context
-     * @return 高度
-     */
-    public static int getStatusBarHeight(Context context) {
+      /**
+       * 使用{@link Window#addFlags(int)}{@link WindowManager.LayoutParams#FLAG_TRANSLUCENT_STATUS},
+       * 配合添加一个设置为指定颜色的view到状态栏区域来间接设置状态栏颜色
+       *
+       * @param activity 需要设置状态栏颜色的activity
+       * @param color 状态栏颜色
+       */
+      public static void setKitkatStatusColor ( Activity activity, @ColorInt int color ) {
 
-        int statusBarHeight = 0;
-        Resources res = context.getResources();
-        int resourceId = res.getIdentifier(
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+
+                  Window window = activity.getWindow();
+
+                  //添加一个view,并设置颜色
+                  ViewGroup decorViewGroup = (ViewGroup) window.getDecorView();
+
+                  View statusBarView = decorViewGroup
+                      .findViewById( R.id.system_ui_status_bar_view );
+
+                  /* 如果没有该view添加一个 */
+                  if( statusBarView == null ) {
+
+                        //状态栏半透明,才能显示颜色
+                        window.addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+
+                        statusBarView = new View( window.getContext() );
+                        statusBarView.setId( R.id.system_ui_status_bar_view );
+                        int statusBarHeight = getStatusBarHeight( window.getContext() );
+                        LayoutParams params = new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            statusBarHeight
+                        );
+
+                        decorViewGroup.getChildAt( 0 ).setFitsSystemWindows( false );
+                        decorViewGroup.addView( statusBarView, 0, params );
+                  }
+
+                  statusBarView.setBackgroundColor( color );
+            }
+      }
+
+      /**
+       * 获取状态栏高度
+       *
+       * @param context context
+       *
+       * @return 高度
+       */
+      public static int getStatusBarHeight ( Context context ) {
+
+            int statusBarHeight = 0;
+            Resources res = context.getResources();
+            int resourceId = res.getIdentifier(
                 "status_bar_height",
                 "dimen",
                 "android"
-        );
-        if (resourceId > 0) {
-            statusBarHeight = res.getDimensionPixelSize(resourceId);
-        }
-        return statusBarHeight;
-    }
-
-
-    /**
-     * 竖直方向偏移状态栏距离
-     *
-     * @param views 需要偏移的views
-     */
-    public static void fitStatusBarHeight(Context context, View... views) {
-
-        if (views != null) {
-            int height = getStatusBarHeight(context);
-            int length = views.length;
-            for (int i = 0; i < length; i++) {
-                View view = views[i];
-                fitStatusBarHeight(height, view);
+            );
+            if( resourceId > 0 ) {
+                  statusBarHeight = res.getDimensionPixelSize( resourceId );
             }
-        }
-    }
+            return statusBarHeight;
+      }
 
+      /**
+       * 清除设置的颜色
+       *
+       * @param activity activity
+       */
+      public static void clearKitkatStatusColor ( Activity activity ) {
 
-    /**
-     * 竖直正方向偏移状态栏距离,不要多次调用给同一个view
-     *
-     * @param view            需要偏移的view
-     * @param statusBarHeight 状态栏高度
-     */
-    private static void fitStatusBarHeight(int statusBarHeight, View view) {
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+                  Window window = activity.getWindow();
 
-        if (view != null) {
-            ViewGroup.LayoutParams rootLayoutParams = view.getLayoutParams();
-            if (rootLayoutParams instanceof ViewGroup.MarginLayoutParams) {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
-                        rootLayoutParams;
-                layoutParams.topMargin += statusBarHeight;
-            } else {
-                view.setPadding(
-                        view.getPaddingLeft(),
-                        view.getPaddingTop() + statusBarHeight,
-                        view.getPaddingRight(),
-                        view.getPaddingBottom()
-                );
+                  //移除添加的view
+                  ViewGroup decorViewGroup = (ViewGroup) window.getDecorView();
+                  View statusBarView = decorViewGroup
+                      .findViewById( R.id.system_ui_status_bar_view );
+                  if( statusBarView != null ) {
+
+                        decorViewGroup.removeView( statusBarView );
+                        decorViewGroup.getChildAt( 0 ).setFitsSystemWindows( true );
+                        /*清除状态栏半透明*/
+                        window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+                  }
             }
-            view.requestLayout();
-        }
-    }
+      }
 
+      /**
+       * 清除状态栏设置的颜色
+       *
+       * @param activity activity
+       */
+      public static void clearLollipopStatusColor ( Activity activity ) {
 
-    /**
-     * 竖直负方向偏移状态栏距离,需要自己保证view之前偏移过状态栏高度,不要多次调用给同一个view
-     *
-     * @param context context
-     * @param view    需要偏移的view
-     */
-    public static void doNotFitStatusBarHeight(Context context, View view) {
-
-        int statusBarHeight = getStatusBarHeight(context);
-
-        if (view != null) {
-            ViewGroup.LayoutParams rootLayoutParams = view.getLayoutParams();
-            if (rootLayoutParams instanceof ViewGroup.MarginLayoutParams) {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
-                        rootLayoutParams;
-                layoutParams.topMargin -= statusBarHeight;
-            } else {
-                view.setPadding(
-                        view.getPaddingLeft(),
-                        view.getPaddingTop() - statusBarHeight,
-                        view.getPaddingRight(),
-                        view.getPaddingBottom()
-                );
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                  Window window = activity.getWindow();
+                  //设置状态栏颜色必须清除WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS标记
+                  window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+                  //设置状态栏颜色必须设置WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS标记
+                  window.clearFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
             }
-            view.requestLayout();
-        }
-    }
+      }
 
+      /**
+       * 竖直方向偏移状态栏距离
+       *
+       * @param views 需要偏移的views
+       */
+      public static void fitStatusBarHeight ( View... views ) {
 
-    /**
-     * 设置状态栏半透明,并且activity布局延伸到状态栏下面
-     *
-     * @param activity activity
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void translucentStatus(Activity activity) {
+      }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      /**
+       * 竖直负方向偏移状态栏距离,需要自己保证view之前偏移过状态栏高度,不要多次调用给同一个view
+       */
+      public static void unFitStatusBarHeight ( View... views ) {
 
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-    }
+      }
 
+      /**
+       * 导航栏状态栏临时隐藏,activity布局占据他们位置,
+       * 在状态栏位置下拉,状态栏出现不会引发activity布局向下移动,
+       * 导航栏出现会向上挤压activity
+       *
+       * @param activity activity
+       */
+      public static void fullScreenTemporary ( Activity activity ) {
 
-    /**
-     * 状态栏开始隐藏,activity布局占据状态栏位置,在状态栏位置下拉,状态栏出现,会引发activity布局向下移动
-     *
-     * @param activity activity
-     */
-    @Deprecated
-    private static void hideStatus(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
-
-    /**
-     * 状态栏开始隐藏,activity布局不占据状态栏位置,在状态栏位置下拉,状态栏出现,不会引发activity布局向下移动
-     *
-     * @param activity activity
-     */
-    @Deprecated
-    private static void hideStatusStable(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        );
-    }
-
-
-    /**
-     * 状态栏开始隐藏,activity布局占据状态栏位置,在状态栏位置下拉,状态栏出现,不会引发activity布局向下移动
-     *
-     * @param activity activity
-     */
-    public static void layoutFullScreen(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
+            activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        );
-    }
+                    View.SYSTEM_UI_FLAG_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            );
+      }
 
+      /**
+       * 临时隐藏状态栏导航条,下拉出现,之后不会消失,相对{@link #fullScreenTemporary(Activity)}不会挤压activity底部
+       *
+       * @param activity activity
+       */
+      public static void fullScreenTemporaryStable ( Activity activity ) {
 
-    /**
-     * 隐藏导航条,activity布局占据导航条位置,点击屏幕出现,会触发activity布局向上移动
-     *
-     * @param activity activity
-     */
-    public static void hideNavigationBar(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        );
-    }
-
-
-    /**
-     * 隐藏导航条,activity布局占据导航条位置,点击屏幕出现,不会触发activity布局向上移动
-     *
-     * @param activity activity
-     */
-    public static void layoutHideNavigationBar(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        );
-    }
-
-
-    /**
-     * 同时隐藏状态栏导航条,下拉出现,之后不会消失
-     *
-     * @param activity activity
-     */
-    public static void immersive(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
+            activity.getWindow().getDecorView().setSystemUiVisibility(
 
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
-    }
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE );
+      }
 
+      /**
+       * 临时隐藏导航条,activity布局占据导航条位置,点击屏幕出现,不会触发activity布局向上移动
+       *
+       * @param activity activity
+       */
+      public static void hideNavigationBarTemporary ( Activity activity ) {
 
-    /**
-     * 同时隐藏状态栏导航条,下拉出现(状态栏导航条半透明),之后会消失
-     *
-     * @param activity activity
-     */
-    public static void immersiveSticky(Activity activity) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            );
+      }
 
-        activity.getWindow().getDecorView().setSystemUiVisibility(
+      /**
+       * 同时隐藏状态栏导航条,下拉出现(状态栏导航条半透明),之后会消失
+       *
+       * @param activity activity
+       */
+      public static void immersive ( Activity activity ) {
+
+            activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-    }
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
+      }
 
+      /**
+       * 清除所有隐藏状态
+       *
+       * @param activity activity
+       */
+      public static void clearHide ( Activity activity ) {
 
-    /**
-     * 同时隐藏导航条状态栏,点击后出现,activity布局重置
-     *
-     * @param activity activity
-     */
-    private static void hideSystemUI(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                        View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
-
-    /**
-     * 同时隐藏导航条状态栏,点击后出现,activity布局不重置
-     *
-     * @param activity activity
-     */
-    private static void hideSystemUiStable(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                        View.SYSTEM_UI_FLAG_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        );
-    }
-
-
-    public static void normal(Activity activity) {
-
-        activity.getWindow().getDecorView().setSystemUiVisibility(
+            activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_VISIBLE
-        );
-    }
+            );
+      }
 }

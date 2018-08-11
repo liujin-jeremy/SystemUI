@@ -1,137 +1,223 @@
 package com.threekilogram.wuxio.systemui;
 
-import android.graphics.Color;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.threekilogram.systemui.SystemUi;
 
+/**
+ * @author liujin
+ */
 public class MainActivity extends AppCompatActivity {
 
-    protected ImageView      mIvLogo;
-    protected ImageView      mIvNavigation;
-    protected FrameLayout    mContent;
-    protected NavigationView mNavigationView;
-    protected DrawerLayout   mDrawer;
+      private static final String TAG = MainActivity.class.getSimpleName();
 
+      protected ImageView      mIvLogo;
+      protected FrameLayout    mContent;
+      protected NavigationView mNavigationView;
+      protected DrawerLayout   mDrawer;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+      @Override
+      protected void onCreate ( Bundle savedInstanceState ) {
 
-        super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_main);
-        initView();
-    }
+            super.onCreate( savedInstanceState );
+            super.setContentView( R.layout.activity_main );
+            initView();
+            Log.e( TAG, "onCreate : " );
+      }
 
+      private void initView ( ) {
 
-    private void initView() {
+            mIvLogo = findViewById( R.id.iv_logo );
+            mContent = findViewById( R.id.content );
+            mNavigationView = findViewById( R.id.navigation_view );
+            mDrawer = findViewById( R.id.drawer );
 
-        mIvLogo = findViewById(R.id.iv_logo);
-        mContent = findViewById(R.id.content);
-        mNavigationView = findViewById(R.id.navigation_view);
-        mDrawer = findViewById(R.id.drawer);
-        mIvNavigation = mNavigationView.getHeaderView(0).findViewById(R.id.main_navigation_header_iv);
+            Glide.with( this ).load( R.drawable.i28731106 ).centerCrop().into( mIvLogo );
 
-        Glide.with(this).load(R.drawable.i28731106).centerCrop().into(mIvLogo);
-        Glide.with(this).load(R.drawable.i30033106).centerCrop().into(mIvNavigation);
-
-        SystemUi.layoutFullScreen(this);
-
-        final Menu menu = mNavigationView.getMenu();
-        mNavigationView.setNavigationItemSelectedListener(
+            final Menu menu = mNavigationView.getMenu();
+            mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 
-                    private boolean flag = false;
+                      @Override
+                      public boolean onNavigationItemSelected ( @NonNull MenuItem item ) {
 
+                            switch( item.getItemId() ) {
 
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                  case R.id.kitkat_translucent:
+                                        SystemUi.translucentStatus( MainActivity.this );
+                                        break;
 
-                        switch (item.getItemId()) {
+                                  case R.id.kitkat_un_translucent:
+                                        SystemUi.clearTranslucentStatus( MainActivity.this );
+                                        break;
 
-                            case R.id.color_gold:
-                                SystemUi.setStatusColor(MainActivity.this, getColor("#ffd700"));
-                                break;
+                                  case R.id.transparent:
+                                        SystemUi.transparentStatus( MainActivity.this );
+                                        break;
 
-                            case R.id.color_blue:
-                                SystemUi.setStatusColor(
-                                        MainActivity.this,
-                                        getResources().getColor(R.color.colorPrimaryDark)
-                                );
-                                break;
+                                  case R.id.clearTranslucent:
+                                        SystemUi.clearTransparentStatus( MainActivity.this );
+                                        break;
 
-                            case R.id.color_transparent:
-                                SystemUi.setStatusColor(
-                                        MainActivity.this,
-                                        Color.TRANSPARENT
-                                );
-                                break;
+                                  case R.id.gold44:
+                                        SystemUi.setKitkatStatusColor(
+                                            MainActivity.this,
+                                            getColorFromRes( R.color.gold )
+                                        );
+                                        break;
 
-                            case R.id.fitSystemBar:
-                                if (!flag) {
-                                    SystemUi.fitStatusBarHeight(MainActivity.this, mIvLogo);
-                                    flag = true;
-                                }
-                                break;
+                                  case R.id.blue44:
+                                        SystemUi.setKitkatStatusColor(
+                                            MainActivity.this,
+                                            getColorFromRes( R.color.colorPrimaryDark )
+                                        );
+                                        break;
 
-                            case R.id.notFitSystemBar:
-                                if (flag) {
-                                    SystemUi.doNotFitStatusBarHeight(MainActivity.this, mIvLogo);
-                                    flag = false;
-                                }
-                                break;
+                                  case R.id.clear44:
+                                        SystemUi.clearKitkatStatusColor(
+                                            MainActivity.this
+                                        );
+                                        break;
 
-                            case R.id.translucent:
-                                SystemUi.translucentStatus(MainActivity.this);
-                                break;
+                                  case R.id.gold50:
+                                        SystemUi.setLollipopStatusColor(
+                                            MainActivity.this,
+                                            getColorFromRes( R.color.gold )
+                                        );
+                                        break;
 
-                            case R.id.immersive:
-                                SystemUi.immersiveSticky(MainActivity.this);
-                                break;
+                                  case R.id.blue50:
+                                        SystemUi.setLollipopStatusColor(
+                                            MainActivity.this,
+                                            getColorFromRes( R.color.colorPrimaryDark )
+                                        );
+                                        break;
 
-                            case R.id.normal:
-                                SystemUi.normal(MainActivity.this);
-                                break;
+                                  case R.id.clear50:
+                                        SystemUi.clearLollipopStatusColor(
+                                            MainActivity.this
+                                        );
+                                        break;
 
-                            default:
-                                break;
-                        }
+                                  case R.id.fullScreenTemporary:
+                                        SystemUi.fullScreenTemporary(
+                                            MainActivity.this
+                                        );
+                                        break;
 
-                        return true;
-                    }
-                });
-    }
+                                  case R.id.hideNavigation:
+                                        SystemUi.hideNavigationBarTemporary(
+                                            MainActivity.this
+                                        );
+                                        break;
 
+                                  case R.id.immersiveRelayout:
+                                        SystemUi.fullScreenTemporaryStable(
+                                            MainActivity.this
+                                        );
+                                        break;
 
-    @ColorInt
-    int getColor(String color) {
+                                  case R.id.immersiveSticky:
+                                        SystemUi.immersive(
+                                            MainActivity.this
+                                        );
+                                        break;
 
-        return Color.parseColor(color);
-    }
+                                  case R.id.clear:
+                                        SystemUi.clearHide(
+                                            MainActivity.this
+                                        );
+                                        break;
 
+                                  case R.id.drawerFit:
+                                        SystemUi.fitStatusBarHeight( mDrawer );
+                                        break;
 
-    int getCheckedColor(Menu menu) {
+                                  case R.id.drawerUnFit:
+                                        SystemUi.unFitStatusBarHeight( mDrawer );
+                                        break;
 
-        if (menu.findItem(R.id.color_gold).isChecked()) {
-            return getColor("#ffd700");
-        }
-        if (menu.findItem(R.id.color_blue).isChecked()) {
-            return getResources().getColor(R.color.colorPrimaryDark);
-        }
-        if (menu.findItem(R.id.color_gold).isChecked()) {
-            return Color.TRANSPARENT;
-        }
+                                  case R.id.contentFit:
+                                        SystemUi.fitStatusBarHeight( mContent );
+                                        break;
 
-        return getResources().getColor(R.color.colorPrimaryDark);
-    }
+                                  case R.id.contentUnFit:
+                                        SystemUi.unFitStatusBarHeight( mContent );
+                                        break;
 
+                                  default:
+                                        break;
+                            }
+
+                            closeDrawer();
+                            return true;
+                      }
+                }
+            );
+      }
+
+      @ColorInt
+      int getColorFromRes ( int color ) {
+
+            return getResources().getColor( color );
+      }
+
+      void closeDrawer ( ) {
+
+            mDrawer.closeDrawer( Gravity.START );
+      }
+
+      @Override
+      public void onConfigurationChanged ( Configuration newConfig ) {
+
+            super.onConfigurationChanged( newConfig );
+            Log.e( TAG, "onConfigurationChanged : " );
+      }
+
+      @Override
+      protected void onStart ( ) {
+
+            super.onStart();
+            Log.e( TAG, "onStart : " );
+      }
+
+      @Override
+      protected void onStop ( ) {
+
+            super.onStop();
+            Log.e( TAG, "onStop : " );
+      }
+
+      @Override
+      protected void onDestroy ( ) {
+
+            super.onDestroy();
+            Log.e( TAG, "onDestroy : " );
+      }
+
+      @Override
+      protected void onPause ( ) {
+
+            super.onPause();
+            Log.e( TAG, "onPause : " );
+      }
+
+      @Override
+      protected void onResume ( ) {
+
+            super.onResume();
+            Log.e( TAG, "onResume : " );
+      }
 }

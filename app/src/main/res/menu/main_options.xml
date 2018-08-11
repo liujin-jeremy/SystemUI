@@ -1,48 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="状态栏颜色">
-
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                        android:id="@+id/color_gold"
-                        android:title="金色"/>
-                <item
-                        android:id="@+id/color_blue"
-                        android:title="蓝色"/>
-                <item
-                        android:id="@+id/color_transparent"
-                        android:title="透明"/>
-            </group>
-
-        </menu>
-
-    </item>
-
-    <group android:checkableBehavior="single">
-        <item
-                android:id="@+id/fitSystemBar"
-                android:title="适应状态栏高度"/>
-        <item
-                android:id="@+id/notFitSystemBar"
-                android:title="不再适应状态栏高度"/>
-    </group>
+      <group android:checkableBehavior="all">
 
 
-    <item
-            android:id="@+id/translucent"
-            android:title="半透明"/>
+            <item android:title="translucent">
 
-    <item android:title="沉浸式">
-        <menu>
-            <item
-                    android:id="@+id/immersive"
-                    android:title="沉浸式"/>
-            <item
-                    android:id="@+id/normal"
-                    android:title="正常"/>
-        </menu>
-    </item>
+                  <menu>
+
+                        <group android:checkableBehavior="single">
+
+                              <item
+                                  android:id="@+id/kitkat_translucent"
+                                  android:title="半透明"/>
+
+
+                              <item
+                                  android:id="@+id/kitkat_un_translucent"
+                                  android:title="取消半透明"/>
+
+
+                        </group>
+
+                  </menu>
+
+            </item>
+
+            <item android:title="transparent">
+
+                  <menu>
+
+                        <group android:checkableBehavior="single">
+
+                              <item
+                                  android:id="@+id/transparent"
+                                  android:title="透明"/>
+
+                              <item
+                                  android:id="@+id/clearTranslucent"
+                                  android:title="取消透明"/>
+
+                        </group>
+
+                  </menu>
+
+            </item>
+
+            <item android:title="4.4状态栏颜色">
+
+                  <menu>
+
+                        <group android:checkableBehavior="single">
+
+                              <item
+                                  android:id="@+id/gold44"
+                                  android:title="金色"/>
+
+                              <item
+                                  android:id="@+id/blue44"
+                                  android:title="蓝色"/>
+
+                              <item
+                                  android:id="@+id/clear44"
+                                  android:title="clear"/>
+
+                        </group>
+
+                  </menu>
+
+            </item>
+
+            <item android:title="5.0状态栏颜色">
+
+                  <menu>
+
+                        <group android:checkableBehavior="single">
+
+                              <item
+                                  android:id="@+id/gold50"
+                                  android:title="金色"/>
+
+                              <item
+                                  android:id="@+id/blue50"
+                                  android:title="蓝色"/>
+
+                              <item
+                                  android:id="@+id/clear50"
+                                  android:title="清除"/>
+
+                        </group>
+
+                  </menu>
+
+            </item>
+
+            <item android:title="hide">
+
+                  <menu>
+
+                        <group android:checkableBehavior="single">
+
+                              <item
+                                  android:id="@+id/fullScreenTemporary"
+                                  android:title="临时全屏"/>
+
+                              <item
+                                  android:id="@+id/hideNavigation"
+                                  android:title="隐藏底部导航条"/>
+
+                              <item
+                                  android:id="@+id/immersiveRelayout"
+                                  android:title="immersiveRelayout"/>
+
+                              <item
+                                  android:id="@+id/immersiveSticky"
+                                  android:title="immersiveSticky"/>
+
+                              <item
+                                  android:id="@+id/clear"
+                                  android:title="clear"/>
+
+                        </group>
+
+                  </menu>
+
+            </item>
+
+            <item android:title="fit">
+
+                  <menu>
+
+                        <group android:checkableBehavior="single">
+
+                              <item
+                                  android:id="@+id/drawerFit"
+                                  android:title="drawerFit"/>
+                              <item
+                                  android:id="@+id/drawerUnFit"
+                                  android:title="drawerUnFit"/>
+
+                              <item
+                                  android:id="@+id/contentFit"
+                                  android:title="contentFit"/>
+                              <item
+                                  android:id="@+id/contentUnFit"
+                                  android:title="contentUnFit"/>
+                        </group>
+
+                  </menu>
+
+            </item>
+
+      </group>
 
 </menu>
