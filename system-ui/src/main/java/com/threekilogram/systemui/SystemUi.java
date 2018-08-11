@@ -3,12 +3,14 @@ package com.threekilogram.systemui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -19,8 +21,6 @@ import android.view.WindowManager;
  */
 public class SystemUi {
 
-      private static final String TAG = SystemUi.class.getSimpleName();
-
       /**
        * 设置状态栏半透明,并且activity布局延伸到状态栏下面
        *
@@ -30,27 +30,13 @@ public class SystemUi {
 
             if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
 
-                  activity.getWindow()
-                          .addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+                  Window window = activity.getWindow();
+                  window.addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
             }
       }
 
       /**
-       * 设置状态栏半透明,并且activity布局延伸到状态栏下面
-       *
-       * @param activity activity
-       */
-      public static void clearTranslucentStatus ( Activity activity ) {
-
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
-
-                  activity.getWindow()
-                          .clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
-            }
-      }
-
-      /**
-       * 状态栏透明
+       * 状态栏透明,并且activity布局延伸到状态栏下面
        *
        * @param activity activity
        */
@@ -58,22 +44,10 @@ public class SystemUi {
 
             if( Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP ) {
 
+                  setLollipopStatusColor( activity, Color.parseColor( "#00000000" ) );
                   activity.getWindow()
-                          .addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
-            }
-      }
-
-      /**
-       * 取消状态栏透明
-       *
-       * @param activity activity
-       */
-      public static void clearTransparentStatus ( Activity activity ) {
-
-            if( Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP ) {
-
-                  activity.getWindow()
-                          .clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+                          .getDecorView()
+                          .setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN );
             }
       }
 
@@ -96,7 +70,7 @@ public class SystemUi {
       }
 
       /**
-       * 使用{@link Window#setStatusBarColor(int)}API设置状态栏颜色
+       * 设置状态栏颜色
        *
        * @param activity 需要设置状态栏颜色的activity
        * @param color 状态栏颜色
@@ -104,11 +78,15 @@ public class SystemUi {
       public static void setLollipopStatusColor ( Activity activity, @ColorInt int color ) {
 
             if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+
                   Window window = activity.getWindow();
+
                   //设置状态栏颜色必须清除WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS标记
                   window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+
                   //设置状态栏颜色必须设置WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS标记
                   window.addFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
+
                   //绘制透明状态栏
                   window.setStatusBarColor( color );
             }
@@ -121,34 +99,39 @@ public class SystemUi {
        * @param activity 需要设置状态栏颜色的activity
        * @param color 状态栏颜色
        */
-      public static void setKitkatStatusColor ( Activity activity, @ColorInt int color ) {
+      public static void setKitkatStatusColor (
+          Activity activity, @ColorInt int color ) {
 
             if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
 
                   Window window = activity.getWindow();
 
-                  //添加一个view,并设置颜色
-                  ViewGroup decorViewGroup = (ViewGroup) window.getDecorView();
+                  /* 状态栏半透明 */
+                  window.addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
 
-                  View statusBarView = decorViewGroup
-                      .findViewById( R.id.system_ui_status_bar_view );
+                  ViewGroup systemContent = activity.findViewById( android.R.id.content );
+                  View statusBarView = activity.findViewById( R.id.system_ui_status_bar_view );
 
-                  /* 如果没有该view添加一个 */
                   if( statusBarView == null ) {
 
-                        //状态栏半透明,才能显示颜色
-                        window.addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
-
-                        statusBarView = new View( window.getContext() );
+                        statusBarView = new View( activity );
                         statusBarView.setId( R.id.system_ui_status_bar_view );
-                        int statusBarHeight = getStatusBarHeight( window.getContext() );
-                        LayoutParams params = new LayoutParams(
+                        int statusBarHeight = getStatusBarHeight( activity );
+                        LayoutParams lp = new LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             statusBarHeight
                         );
 
-                        decorViewGroup.getChildAt( 0 ).setFitsSystemWindows( false );
-                        decorViewGroup.addView( statusBarView, 0, params );
+                        /* add a margin */
+
+                        MarginLayoutParams layoutParams =
+                            (MarginLayoutParams) systemContent.getChildAt( 0 ).getLayoutParams();
+                        int topMargin = layoutParams.topMargin;
+                        layoutParams.topMargin = topMargin + statusBarHeight;
+
+                        /* add backGround */
+
+                        systemContent.addView( statusBarView, 0, lp );
                   }
 
                   statusBarView.setBackgroundColor( color );
@@ -182,21 +165,27 @@ public class SystemUi {
        *
        * @param activity activity
        */
-      public static void clearKitkatStatusColor ( Activity activity ) {
+      private static void clearKitkatStatusColor ( Activity activity ) {
 
             if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
-                  Window window = activity.getWindow();
 
-                  //移除添加的view
-                  ViewGroup decorViewGroup = (ViewGroup) window.getDecorView();
-                  View statusBarView = decorViewGroup
-                      .findViewById( R.id.system_ui_status_bar_view );
+                  Window window = activity.getWindow();
+                  /* 状态栏半透明 */
+                  window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+
+                  ViewGroup systemContent = activity.findViewById( android.R.id.content );
+                  View statusBarView = activity.findViewById( R.id.system_ui_status_bar_view );
+
                   if( statusBarView != null ) {
 
-                        decorViewGroup.removeView( statusBarView );
-                        decorViewGroup.getChildAt( 0 ).setFitsSystemWindows( true );
-                        /*清除状态栏半透明*/
-                        window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
+                        /* delete backGround */
+                        systemContent.removeView( statusBarView );
+
+                        /* delete margin */
+                        MarginLayoutParams layoutParams =
+                            (MarginLayoutParams) systemContent.getChildAt( 0 ).getLayoutParams();
+                        int topMargin = layoutParams.topMargin;
+                        layoutParams.topMargin = topMargin - getStatusBarHeight( activity );
                   }
             }
       }
@@ -206,7 +195,7 @@ public class SystemUi {
        *
        * @param activity activity
        */
-      public static void clearLollipopStatusColor ( Activity activity ) {
+      private static void clearLollipopStatusColor ( Activity activity ) {
 
             if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
                   Window window = activity.getWindow();
@@ -215,22 +204,6 @@ public class SystemUi {
                   //设置状态栏颜色必须设置WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS标记
                   window.clearFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
             }
-      }
-
-      /**
-       * 竖直方向偏移状态栏距离
-       *
-       * @param views 需要偏移的views
-       */
-      public static void fitStatusBarHeight ( View... views ) {
-
-      }
-
-      /**
-       * 竖直负方向偏移状态栏距离,需要自己保证view之前偏移过状态栏高度,不要多次调用给同一个view
-       */
-      public static void unFitStatusBarHeight ( View... views ) {
-
       }
 
       /**

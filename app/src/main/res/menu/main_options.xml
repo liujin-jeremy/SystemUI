@@ -126,31 +126,6 @@
 
             </item>
 
-            <item android:title="fit">
-
-                  <menu>
-
-                        <group android:checkableBehavior="single">
-
-                              <item
-                                  android:id="@+id/drawerFit"
-                                  android:title="drawerFit"/>
-                              <item
-                                  android:id="@+id/drawerUnFit"
-                                  android:title="drawerUnFit"/>
-
-                              <item
-                                  android:id="@+id/contentFit"
-                                  android:title="contentFit"/>
-                              <item
-                                  android:id="@+id/contentUnFit"
-                                  android:title="contentUnFit"/>
-                        </group>
-
-                  </menu>
-
-            </item>
-
       </group>
 
 </menu>

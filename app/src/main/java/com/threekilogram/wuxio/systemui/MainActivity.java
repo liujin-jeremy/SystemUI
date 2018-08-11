@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate( savedInstanceState );
             super.setContentView( R.layout.activity_main );
             initView();
-            Log.e( TAG, "onCreate : " );
       }
 
       private void initView ( ) {
@@ -56,59 +55,39 @@ public class MainActivity extends AppCompatActivity {
                             switch( item.getItemId() ) {
 
                                   case R.id.kitkat_translucent:
-                                        SystemUi.translucentStatus( MainActivity.this );
+                                        TranslucentActivity.start( MainActivity.this );
                                         break;
 
                                   case R.id.kitkat_un_translucent:
-                                        SystemUi.clearTranslucentStatus( MainActivity.this );
                                         break;
 
                                   case R.id.transparent:
-                                        SystemUi.transparentStatus( MainActivity.this );
+                                        TransparentActivity.start( MainActivity.this );
                                         break;
 
                                   case R.id.clearTranslucent:
-                                        SystemUi.clearTransparentStatus( MainActivity.this );
                                         break;
 
                                   case R.id.gold44:
-                                        SystemUi.setKitkatStatusColor(
-                                            MainActivity.this,
-                                            getColorFromRes( R.color.gold )
-                                        );
+                                        Gold44Activity.start( MainActivity.this );
                                         break;
 
                                   case R.id.blue44:
-                                        SystemUi.setKitkatStatusColor(
-                                            MainActivity.this,
-                                            getColorFromRes( R.color.colorPrimaryDark )
-                                        );
+                                        Blue44Activity.start( MainActivity.this );
                                         break;
 
                                   case R.id.clear44:
-                                        SystemUi.clearKitkatStatusColor(
-                                            MainActivity.this
-                                        );
                                         break;
 
                                   case R.id.gold50:
-                                        SystemUi.setLollipopStatusColor(
-                                            MainActivity.this,
-                                            getColorFromRes( R.color.gold )
-                                        );
+                                        Gold50Activity.start( MainActivity.this );
                                         break;
 
                                   case R.id.blue50:
-                                        SystemUi.setLollipopStatusColor(
-                                            MainActivity.this,
-                                            getColorFromRes( R.color.colorPrimaryDark )
-                                        );
+                                        Blue50Activity.start( MainActivity.this );
                                         break;
 
                                   case R.id.clear50:
-                                        SystemUi.clearLollipopStatusColor(
-                                            MainActivity.this
-                                        );
                                         break;
 
                                   case R.id.fullScreenTemporary:
@@ -139,22 +118,6 @@ public class MainActivity extends AppCompatActivity {
                                         SystemUi.clearHide(
                                             MainActivity.this
                                         );
-                                        break;
-
-                                  case R.id.drawerFit:
-                                        SystemUi.fitStatusBarHeight( mDrawer );
-                                        break;
-
-                                  case R.id.drawerUnFit:
-                                        SystemUi.unFitStatusBarHeight( mDrawer );
-                                        break;
-
-                                  case R.id.contentFit:
-                                        SystemUi.fitStatusBarHeight( mContent );
-                                        break;
-
-                                  case R.id.contentUnFit:
-                                        SystemUi.unFitStatusBarHeight( mContent );
                                         break;
 
                                   default:
