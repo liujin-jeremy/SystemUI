@@ -15,11 +15,6 @@
                                   android:title="半透明"/>
 
 
-                              <item
-                                  android:id="@+id/kitkat_un_translucent"
-                                  android:title="取消半透明"/>
-
-
                         </group>
 
                   </menu>
@@ -35,10 +30,6 @@
                               <item
                                   android:id="@+id/transparent"
                                   android:title="透明"/>
-
-                              <item
-                                  android:id="@+id/clearTranslucent"
-                                  android:title="取消透明"/>
 
                         </group>
 
@@ -60,10 +51,6 @@
                                   android:id="@+id/blue44"
                                   android:title="蓝色"/>
 
-                              <item
-                                  android:id="@+id/clear44"
-                                  android:title="clear"/>
-
                         </group>
 
                   </menu>
@@ -84,9 +71,6 @@
                                   android:id="@+id/blue50"
                                   android:title="蓝色"/>
 
-                              <item
-                                  android:id="@+id/clear50"
-                                  android:title="清除"/>
 
                         </group>
 
@@ -105,16 +89,17 @@
                                   android:title="临时全屏"/>
 
                               <item
+                                  android:id="@+id/fullScreenTemporaryStable"
+                                  android:title="fullScreenTemporaryStable"/>
+
+                              <item
                                   android:id="@+id/hideNavigation"
                                   android:title="隐藏底部导航条"/>
 
-                              <item
-                                  android:id="@+id/immersiveRelayout"
-                                  android:title="immersiveRelayout"/>
 
                               <item
-                                  android:id="@+id/immersiveSticky"
-                                  android:title="immersiveSticky"/>
+                                  android:id="@+id/immersive"
+                                  android:title="immersive"/>
 
                               <item
                                   android:id="@+id/clear"

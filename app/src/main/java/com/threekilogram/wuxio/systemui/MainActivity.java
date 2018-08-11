@@ -102,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
                                         );
                                         break;
 
-                                  case R.id.immersiveRelayout:
+                                  case R.id.fullScreenTemporaryStable:
                                         SystemUi.fullScreenTemporaryStable(
                                             MainActivity.this
                                         );
                                         break;
 
-                                  case R.id.immersiveSticky:
+                                  case R.id.immersive:
                                         SystemUi.immersive(
                                             MainActivity.this
                                         );
