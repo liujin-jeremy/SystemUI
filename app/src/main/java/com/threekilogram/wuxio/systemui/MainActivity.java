@@ -58,14 +58,8 @@ public class MainActivity extends AppCompatActivity {
                                         TranslucentActivity.start( MainActivity.this );
                                         break;
 
-                                  case R.id.kitkat_un_translucent:
-                                        break;
-
                                   case R.id.transparent:
                                         TransparentActivity.start( MainActivity.this );
-                                        break;
-
-                                  case R.id.clearTranslucent:
                                         break;
 
                                   case R.id.gold44:
@@ -77,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                                         break;
 
                                   case R.id.clear44:
+                                        SystemUi.clearKitkatStatusColor( MainActivity.this );
                                         break;
 
                                   case R.id.gold50:
@@ -85,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
                                   case R.id.blue50:
                                         Blue50Activity.start( MainActivity.this );
-                                        break;
-
-                                  case R.id.clear50:
                                         break;
 
                                   case R.id.fullScreenTemporary:
@@ -115,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
                                         break;
 
                                   case R.id.clear:
-                                        SystemUi.clearHide(
-                                            MainActivity.this
-                                        );
                                         break;
 
                                   default:

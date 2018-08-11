@@ -51,6 +51,10 @@
                                   android:id="@+id/blue44"
                                   android:title="蓝色"/>
 
+                              <item
+                                  android:id="@+id/clear44"
+                                  android:title="移除"/>
+
                         </group>
 
                   </menu>

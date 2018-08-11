@@ -139,6 +139,32 @@ public class SystemUi {
       }
 
       /**
+       * 清除kitkat status view
+       *
+       * @param activity activity
+       */
+      public static void clearKitkatStatusColor ( Activity activity ) {
+
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+
+                  ViewGroup systemContent = activity.findViewById( android.R.id.content );
+                  View statusBarView = activity.findViewById( R.id.system_ui_status_bar_view );
+
+                  if( statusBarView != null ) {
+
+                        systemContent.removeViewAt( 0 );
+
+                        /* add a margin */
+
+                        MarginLayoutParams layoutParams =
+                            (MarginLayoutParams) systemContent.getChildAt( 0 ).getLayoutParams();
+                        int topMargin = layoutParams.topMargin;
+                        layoutParams.topMargin = topMargin - getStatusBarHeight( activity );
+                  }
+            }
+      }
+
+      /**
        * 获取状态栏高度
        *
        * @param context context
@@ -158,52 +184,6 @@ public class SystemUi {
                   statusBarHeight = res.getDimensionPixelSize( resourceId );
             }
             return statusBarHeight;
-      }
-
-      /**
-       * 清除设置的颜色
-       *
-       * @param activity activity
-       */
-      private static void clearKitkatStatusColor ( Activity activity ) {
-
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
-
-                  Window window = activity.getWindow();
-                  /* 状态栏半透明 */
-                  window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
-
-                  ViewGroup systemContent = activity.findViewById( android.R.id.content );
-                  View statusBarView = activity.findViewById( R.id.system_ui_status_bar_view );
-
-                  if( statusBarView != null ) {
-
-                        /* delete backGround */
-                        systemContent.removeView( statusBarView );
-
-                        /* delete margin */
-                        MarginLayoutParams layoutParams =
-                            (MarginLayoutParams) systemContent.getChildAt( 0 ).getLayoutParams();
-                        int topMargin = layoutParams.topMargin;
-                        layoutParams.topMargin = topMargin - getStatusBarHeight( activity );
-                  }
-            }
-      }
-
-      /**
-       * 清除状态栏设置的颜色
-       *
-       * @param activity activity
-       */
-      private static void clearLollipopStatusColor ( Activity activity ) {
-
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                  Window window = activity.getWindow();
-                  //设置状态栏颜色必须清除WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS标记
-                  window.clearFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
-                  //设置状态栏颜色必须设置WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS标记
-                  window.clearFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
-            }
       }
 
       /**
@@ -263,17 +243,5 @@ public class SystemUi {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
-      }
-
-      /**
-       * 清除所有隐藏状态
-       *
-       * @param activity activity
-       */
-      public static void clearHide ( Activity activity ) {
-
-            activity.getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_VISIBLE
-            );
       }
 }
