@@ -1,12 +1,14 @@
-package com.threekilogram.systemui;
+package tech.threekilogram.jchat.util;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorInt;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -30,7 +32,7 @@ public class SystemUi {
        */
       public static void translucentStatus ( Activity activity ) {
 
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT ) {
 
                   Window window = activity.getWindow();
                   window.addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
@@ -61,12 +63,12 @@ public class SystemUi {
        */
       public static void setStatusColor ( Activity activity, @ColorInt int color ) {
 
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP ) {
                   setLollipopStatusColor( activity, color );
                   return;
             }
 
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT ) {
                   setKitkatStatusColor( activity, color );
             }
       }
@@ -79,7 +81,7 @@ public class SystemUi {
        */
       public static void setLollipopStatusColor ( Activity activity, @ColorInt int color ) {
 
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP ) {
 
                   Window window = activity.getWindow();
 
@@ -104,7 +106,7 @@ public class SystemUi {
       public static void setKitkatStatusColor (
           Activity activity, @ColorInt int color ) {
 
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT ) {
 
                   Window window = activity.getWindow();
 
@@ -150,7 +152,7 @@ public class SystemUi {
        */
       public static void clearKitkatStatusColor ( Activity activity ) {
 
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
+            if( Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT ) {
 
                   ViewGroup systemContent = activity.findViewById( android.R.id.content );
                   View statusBarView = activity.findViewById( sStatusViewID );
@@ -178,17 +180,20 @@ public class SystemUi {
        */
       public static int getStatusBarHeight ( Context context ) {
 
-            int statusBarHeight = 0;
             Resources res = context.getResources();
             int resourceId = res.getIdentifier(
                 "status_bar_height",
                 "dimen",
                 "android"
             );
-            if( resourceId > 0 ) {
-                  statusBarHeight = res.getDimensionPixelSize( resourceId );
+            try {
+                  return res.getDimensionPixelSize( resourceId );
+            } catch(NotFoundException e) {
+                  /* nothing */
             }
-            return statusBarHeight;
+
+            DisplayMetrics displayMetrics = res.getDisplayMetrics();
+            return (int) displayMetrics.density * 24;
       }
 
       /**
