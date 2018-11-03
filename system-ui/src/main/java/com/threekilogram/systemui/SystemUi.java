@@ -21,6 +21,8 @@ import android.view.WindowManager;
  */
 public class SystemUi {
 
+      private static int sStatusViewID;
+
       /**
        * 设置状态栏半透明,并且activity布局延伸到状态栏下面
        *
@@ -110,12 +112,15 @@ public class SystemUi {
                   window.addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS );
 
                   ViewGroup systemContent = activity.findViewById( android.R.id.content );
-                  View statusBarView = activity.findViewById( R.id.system_ui_status_bar_view );
+                  if( sStatusViewID == 0 ) {
+                        sStatusViewID = View.generateViewId();
+                  }
+                  View statusBarView = activity.findViewById( sStatusViewID );
 
                   if( statusBarView == null ) {
 
                         statusBarView = new View( activity );
-                        statusBarView.setId( R.id.system_ui_status_bar_view );
+                        statusBarView.setId( sStatusViewID );
                         int statusBarHeight = getStatusBarHeight( activity );
                         LayoutParams lp = new LayoutParams(
                             LayoutParams.MATCH_PARENT,
@@ -148,7 +153,7 @@ public class SystemUi {
             if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
 
                   ViewGroup systemContent = activity.findViewById( android.R.id.content );
-                  View statusBarView = activity.findViewById( R.id.system_ui_status_bar_view );
+                  View statusBarView = activity.findViewById( sStatusViewID );
 
                   if( statusBarView != null ) {
 
