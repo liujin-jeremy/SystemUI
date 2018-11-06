@@ -1,4 +1,4 @@
-package tech.threekilogram.jchat.util;
+package com.threekilogram.systemui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorInt;
+import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,6 +204,7 @@ public class SystemUi {
        *
        * @param activity activity
        */
+      @RequiresApi(16)
       public static void fullScreenTemporary ( Activity activity ) {
 
             activity.getWindow().getDecorView().setSystemUiVisibility(
@@ -217,6 +219,7 @@ public class SystemUi {
        *
        * @param activity activity
        */
+      @RequiresApi(19)
       public static void fullScreenTemporaryStable ( Activity activity ) {
 
             activity.getWindow().getDecorView().setSystemUiVisibility(
@@ -245,6 +248,7 @@ public class SystemUi {
        *
        * @param activity activity
        */
+      @RequiresApi(19)
       public static void immersive ( Activity activity ) {
 
             activity.getWindow().getDecorView().setSystemUiVisibility(
