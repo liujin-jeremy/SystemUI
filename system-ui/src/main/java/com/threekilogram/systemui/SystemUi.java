@@ -160,7 +160,7 @@ public class SystemUi {
 
                   if( statusBarView != null ) {
 
-                        systemContent.removeViewAt( 0 );
+                        systemContent.removeView( statusBarView );
 
                         /* add a margin */
 
@@ -236,6 +236,7 @@ public class SystemUi {
        *
        * @param activity activity
        */
+      @RequiresApi(16)
       public static void hideNavigationBarTemporary ( Activity activity ) {
 
             activity.getWindow().getDecorView().setSystemUiVisibility(
