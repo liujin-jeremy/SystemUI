@@ -1,23 +1,11 @@
 
 ## 引入
 
-project
 ```
-allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
-}
+implementation 'tech.threekilogram:system-ui:2.0.2'
 ```
 
-app
 
-```
-dependencies {
-        implementation 'com.github.threekilogram:SystemUI:1.2.4'
-}
-```
 
 ## 设置状态栏颜色
 
