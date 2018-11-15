@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorInt;
@@ -195,6 +196,18 @@ public class SystemUi {
 
             DisplayMetrics displayMetrics = res.getDisplayMetrics();
             return (int) displayMetrics.density * 24;
+      }
+
+      /**
+       * 只有Activity界面位于状态栏之下才能正确获取高度
+       */
+      public static int getStatusBarHeightByWindow ( Activity activity ) {
+
+            // 通过Window拿取
+            Rect rectangle = new Rect();
+            Window window = activity.getWindow();
+            window.getDecorView().getWindowVisibleDisplayFrame( rectangle );
+            return rectangle.top;
       }
 
       /**
