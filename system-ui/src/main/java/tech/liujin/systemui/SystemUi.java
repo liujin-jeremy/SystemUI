@@ -1,4 +1,4 @@
-package com.threekilogram.systemui;
+package tech.liujin.systemui;
 
 import android.app.Activity;
 import android.content.Context;
