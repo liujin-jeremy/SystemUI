@@ -1,6 +1,8 @@
 package com.threekilogram.wuxio.systemui;
 
+import android.annotation.TargetApi;
 import android.content.res.Configuration;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 
+                      @android.support.annotation.RequiresApi(api = VERSION_CODES.KITKAT)
                       @Override
                       public boolean onNavigationItemSelected ( @NonNull MenuItem item ) {
 
