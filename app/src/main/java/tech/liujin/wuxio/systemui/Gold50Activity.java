@@ -3,7 +3,6 @@ package tech.liujin.wuxio.systemui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.liujin.wuxio.systemui.R;
 import tech.liujin.systemui.SystemUi;
 
 /**
