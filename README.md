@@ -7,47 +7,75 @@ implementation 'tech.liujin:system-ui:1.0.0'
 
 
 
-## 设置状态栏颜色
+## 使用
+
+### 半透明
 
 ```
-//可设置所有颜色包括透明
-SystemUI.setStatusColor(MainActivity.this, getColor("#ffd700"));
+SystemUi.translucentStatus( this );
 ```
 
-## 将view位移状态栏高度
+![](img/pic00.gif)
+
+
+
+### 全透明
 
 ```
-SystemUI.fitStatusBarHeight(MainActivity.this, mIvLogo);
+SystemUi.transparentStatus( this );
 ```
 
-还原
+![](img/pic01.gif)
+
+
+
+### 设置颜色
+
+1.替换状态栏方式
 
 ```
-SystemUI.doNotFitStatusBarHeight(MainActivity.this, mIvLogo);
+SystemUi.setKitkatStatusColor(
+    Gold44Activity.this,
+    getColorFromRes( R.color.gold )
+);
 ```
 
-## 半透明状态栏
+![](img/pic02.gif)
+
+2.使用`5.0`API
 
 ```
-SystemUI.translucentStatus(MainActivity.this);
+SystemUi.setLollipopStatusColor(
+    Gold50Activity.this,
+    getColorFromRes( R.color.gold )
+);
 ```
 
-或者通过设置颜色
+![](img/pic03.gif)
 
-## 全屏
 
-```
-SystemUI.layoutFullScreen(Activity activity)
-```
 
-## 沉浸式
+### 临时全屏
 
 ```
-SystemUI.immersiveSticky(MainActivity.this);
+SystemUi.fullScreenTemporary(
+    MainActivity.this
+);
 ```
 
-## 还原为普通模式
+![](img/pic04.gif)
+
+
+
+### 沉浸式
 
 ```
-SystemUI.normal(Activity activity)
+SystemUi.fullScreenTemporary(
+    MainActivity.this
+);
 ```
+
+![](img/pic05.gif)
+
+
+
