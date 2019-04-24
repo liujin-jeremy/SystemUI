@@ -1,4 +1,4 @@
-package com.threekilogram.wuxio.systemui;
+package tech.liujin.wuxio.systemui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import tech.liujin.systemui.SystemUi;
 /**
  * @author liujin
  */
-public class TranslucentActivity extends MainActivity {
+public class TransparentActivity extends MainActivity {
 
       public static void start ( Context context ) {
 
-            Intent starter = new Intent( context, TranslucentActivity.class );
+            Intent starter = new Intent( context, TransparentActivity.class );
             context.startActivity( starter );
       }
 
@@ -21,6 +21,6 @@ public class TranslucentActivity extends MainActivity {
 
             super.onCreate( savedInstanceState );
 
-            SystemUi.translucentStatus( this );
+            SystemUi.transparentStatus( this );
       }
 }

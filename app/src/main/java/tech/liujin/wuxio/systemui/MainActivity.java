@@ -1,6 +1,5 @@
-package com.threekilogram.wuxio.systemui;
+package tech.liujin.wuxio.systemui;
 
-import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.liujin.wuxio.systemui.R;
 import tech.liujin.systemui.SystemUi;
 
 /**

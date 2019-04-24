@@ -1,18 +1,19 @@
-package com.threekilogram.wuxio.systemui;
+package tech.liujin.wuxio.systemui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import com.liujin.wuxio.systemui.R;
 import tech.liujin.systemui.SystemUi;
 
 /**
  * @author liujin
  */
-public class TransparentActivity extends MainActivity {
+public class Blue50Activity extends MainActivity {
 
       public static void start ( Context context ) {
 
-            Intent starter = new Intent( context, TransparentActivity.class );
+            Intent starter = new Intent( context, Blue50Activity.class );
             context.startActivity( starter );
       }
 
@@ -21,6 +22,9 @@ public class TransparentActivity extends MainActivity {
 
             super.onCreate( savedInstanceState );
 
-            SystemUi.transparentStatus( this );
+            SystemUi.setLollipopStatusColor(
+                Blue50Activity.this,
+                getColorFromRes( R.color.colorPrimary )
+            );
       }
 }

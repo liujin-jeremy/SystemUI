@@ -1,4 +1,4 @@
-package com.threekilogram.wuxio.systemui;
+package tech.liujin.wuxio.systemui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import tech.liujin.systemui.SystemUi;
 /**
  * @author liujin
  */
-public class Blue44Activity extends MainActivity {
+public class TranslucentActivity extends MainActivity {
 
       public static void start ( Context context ) {
 
-            Intent starter = new Intent( context, Blue44Activity.class );
+            Intent starter = new Intent( context, TranslucentActivity.class );
             context.startActivity( starter );
       }
 
@@ -21,9 +21,6 @@ public class Blue44Activity extends MainActivity {
 
             super.onCreate( savedInstanceState );
 
-            SystemUi.setKitkatStatusColor(
-                Blue44Activity.this,
-                getColorFromRes( R.color.colorPrimary )
-            );
+            SystemUi.translucentStatus( this );
       }
 }

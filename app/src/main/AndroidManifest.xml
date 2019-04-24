@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.threekilogram.wuxio.systemui">
+    package="com.liujin.wuxio.systemui">
 
       <application
           android:allowBackup="true"
@@ -9,20 +9,20 @@
           android:roundIcon="@mipmap/ic_launcher_round"
           android:supportsRtl="true"
           android:theme="@style/AppTheme">
-            <activity android:name=".MainActivity">
+            <activity android:name="com.liujin.wuxio.systemui.tech.liujin.wuxio.systemui.MainActivity">
                   <intent-filter>
                         <action android:name="android.intent.action.MAIN"/>
 
                         <category android:name="android.intent.category.LAUNCHER"/>
                   </intent-filter>
             </activity>
-            <activity android:name=".TranslucentActivity">
+            <activity android:name="com.liujin.wuxio.systemui.tech.liujin.wuxio.systemui.TranslucentActivity">
             </activity>
-            <activity android:name=".TransparentActivity"/>
-            <activity android:name=".Gold44Activity"/>
-            <activity android:name=".Blue44Activity"/>
-            <activity android:name=".Gold50Activity"/>
-            <activity android:name=".Blue50Activity"/>
+            <activity android:name="com.liujin.wuxio.systemui.tech.liujin.wuxio.systemui.TransparentActivity"/>
+            <activity android:name="com.liujin.wuxio.systemui.tech.liujin.wuxio.systemui.Gold44Activity"/>
+            <activity android:name="com.liujin.wuxio.systemui.tech.liujin.wuxio.systemui.Blue44Activity"/>
+            <activity android:name="com.liujin.wuxio.systemui.tech.liujin.wuxio.systemui.Gold50Activity"/>
+            <activity android:name="com.liujin.wuxio.systemui.tech.liujin.wuxio.systemui.Blue50Activity"/>
       </application>
 
 </manifest>
