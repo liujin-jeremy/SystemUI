@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import com.threekilogram.systemui.SystemUi;
+import tech.liujin.systemui.SystemUi;
 
 /**
  * @author liujin

@@ -3,7 +3,7 @@ package com.threekilogram.wuxio.systemui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.threekilogram.systemui.SystemUi;
+import tech.liujin.systemui.SystemUi;
 
 /**
  * @author liujin
