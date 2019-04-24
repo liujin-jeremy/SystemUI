@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import com.liujin.wuxio.systemui.R;
 import tech.liujin.systemui.SystemUi;
 
 /**
