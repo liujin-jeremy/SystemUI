@@ -2,7 +2,7 @@
 ## 引入
 
 ```
-implementation 'tech.liujin:system-ui:1.0.0'
+implementation 'tech.liujin:system-ui:1.0.4'
 ```
 
 
